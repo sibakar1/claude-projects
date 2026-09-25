@@ -308,3 +308,353 @@ document.getElementById('facebookLink')?.addEventListener('click', (e) => {
     e.preventDefault();
     alert('Facebook profile');
 });
+
+// ============================================
+// AI CHAT FUNCTIONALITY
+// ============================================
+
+// Chat state
+let chatHistory = [];
+let isAIResponding = false;
+
+// DOM elements
+const chatMessages = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chatInput');
+const sendBtn = document.getElementById('sendBtn');
+const modelSelect = document.getElementById('modelSelect');
+const newChatBtn = document.getElementById('newChatBtn');
+const clearChatBtn = document.getElementById('clearChatBtn');
+const welcomeMessage = document.getElementById('welcomeMessage');
+
+// ============================================
+// API-READY FUNCTION - Future Integration Point
+// ============================================
+async function sendMessageToAI(message, model) {
+    /*
+     * TODO: Connect to real API endpoint
+     *
+     * Future implementation:
+     * 1. Send request to backend proxy (not direct to AI API)
+     * 2. Backend handles API keys securely
+     * 3. Backend routes to appropriate model (Claude, DeepSeek, MiniMax)
+     * 4. Stream response back to frontend
+     * 5. Handle errors and timeouts
+     *
+     * Example structure:
+     * const response = await fetch('/api/chat', {
+     *     method: 'POST',
+     *     headers: { 'Content-Type': 'application/json' },
+     *     body: JSON.stringify({ message, model, history: chatHistory })
+     * });
+     * return await response.json();
+     */
+
+    // For now, use demo response system
+    return await generateDemoResponse(message, model);
+}
+
+// ============================================
+// DEMO RESPONSE GENERATOR
+// ============================================
+async function generateDemoResponse(message, model) {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1000));
+
+    const lowerMessage = message.toLowerCase();
+
+    // Check for code-related keywords
+    const hasCode = lowerMessage.includes('code') || lowerMessage.includes('function') ||
+                   lowerMessage.includes('debug') || lowerMessage.includes('error') ||
+                   lowerMessage.includes('python') || lowerMessage.includes('javascript');
+
+    let response = '';
+
+    if (hasCode) {
+        response = `Great question! Here's how I can help with that:
+
+${getCodeExample(lowerMessage)}
+
+This approach should work well for your use case. Let me know if you'd like me to explain any part in more detail!`;
+    } else {
+        response = getDemoTextResponse(lowerMessage, model);
+    }
+
+    return { text: response, model: model };
+}
+
+function getCodeExample(message) {
+    if (message.includes('python')) {
+        return `\`\`\`python
+def greet(name):
+    """A simple greeting function"""
+    return f"Hello, {name}!"
+
+# Usage
+result = greet("Developer")
+print(result)
+\`\`\``;
+    } else if (message.includes('javascript') || message.includes('js')) {
+        return `\`\`\`javascript
+function fetchData(url) {
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log('Data received:', data);
+            return data;
+        })
+        .catch(error => console.error('Error:', error));
+}
+\`\`\``;
+    } else {
+        return `\`\`\`javascript
+// Example implementation
+function solution(input) {
+    // Your code here
+    return processedResult;
+}
+\`\`\``;
+    }
+}
+
+function getDemoTextResponse(message, model) {
+    const responses = [
+        `I'm here to help with your coding questions! As ${model}, I can assist with debugging, architecture decisions, best practices, and more.`,
+        `That's an interesting question! Based on my training, I'd recommend considering the trade-offs between performance, maintainability, and scalability.`,
+        `Let me break this down for you. The key concepts to understand here are abstraction, encapsulation, and separation of concerns.`,
+        `Great question! The best approach depends on your specific requirements, team size, and project timeline. Let's explore the options.`
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+}
+
+// ============================================
+// MESSAGE RENDERING
+// ============================================
+function addUserMessage(text) {
+    if (welcomeMessage) {
+        welcomeMessage.style.display = 'none';
+    }
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message user';
+    messageDiv.innerHTML = `
+        <div class="message-content">
+            <div class="message-text">${escapeHtml(text)}</div>
+        </div>
+        <div class="message-avatar">👤</div>
+    `;
+
+    chatMessages.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+function addAIMessage(text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message ai';
+
+    const content = processMessageContent(text);
+
+    messageDiv.innerHTML = `
+        <div class="message-avatar">🤖</div>
+        <div class="message-content">
+            ${content}
+            <button class="copy-btn" onclick="copyMessage(this)">Copy</button>
+        </div>
+    `;
+
+    chatMessages.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+function processMessageContent(text) {
+    // Process code blocks
+    const codeBlockRegex = /```(\w+)?\n([\s\S]+?)```/g;
+    let processed = text;
+
+    processed = processed.replace(codeBlockRegex, (match, language, code) => {
+        const lang = language || 'code';
+        return `
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">${lang}</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+                </div>
+                <div class="code-content">
+                    <pre>${escapeHtml(code.trim())}</pre>
+                </div>
+            </div>
+        `;
+    });
+
+    // Convert remaining text
+    processed = processed.replace(/\n/g, '<br>');
+
+    return `<div class="message-text">${processed}</div>`;
+}
+
+function showTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message ai';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = `
+        <div class="message-avatar">🤖</div>
+        <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+    `;
+
+    chatMessages.appendChild(typingDiv);
+    scrollToBottom();
+}
+
+function removeTypingIndicator() {
+    const typing = document.getElementById('typingIndicator');
+    if (typing) {
+        typing.remove();
+    }
+}
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function scrollToBottom() {
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function copyMessage(button) {
+    const messageContent = button.parentElement.querySelector('.message-text');
+    const text = messageContent.innerText;
+
+    navigator.clipboard.writeText(text).then(() => {
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+            button.textContent = 'Copy';
+        }, 2000);
+    });
+}
+
+function copyCode(button) {
+    const codeBlock = button.closest('.code-block');
+    const code = codeBlock.querySelector('pre').innerText;
+
+    navigator.clipboard.writeText(code).then(() => {
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+            button.textContent = 'Copy Code';
+        }, 2000);
+    });
+}
+
+// ============================================
+// EVENT HANDLERS
+// ============================================
+async function handleSendMessage() {
+    const message = chatInput.value.trim();
+    if (!message || isAIResponding) return;
+
+    isAIResponding = true;
+    sendBtn.disabled = true;
+
+    // Add user message
+    addUserMessage(message);
+    chatHistory.push({ role: 'user', content: message });
+
+    // Clear input
+    chatInput.value = '';
+    chatInput.style.height = 'auto';
+    updateSendButton();
+
+    // Show typing indicator
+    showTypingIndicator();
+
+    try {
+        // Get AI response
+        const selectedModel = modelSelect.value;
+        const response = await sendMessageToAI(message, selectedModel);
+
+        // Remove typing indicator
+        removeTypingIndicator();
+
+        // Add AI message
+        addAIMessage(response.text);
+        chatHistory.push({ role: 'assistant', content: response.text });
+
+    } catch (error) {
+        removeTypingIndicator();
+        addAIMessage('Sorry, I encountered an error. Please try again.');
+    }
+
+    isAIResponding = false;
+    chatInput.focus();
+}
+
+function updateSendButton() {
+    sendBtn.disabled = !chatInput.value.trim() || isAIResponding;
+}
+
+function handleNewChat() {
+    if (confirm('Start a new chat? This will clear the current conversation.')) {
+        clearChat();
+    }
+}
+
+function handleClearChat() {
+    if (confirm('Clear all messages?')) {
+        clearChat();
+    }
+}
+
+function clearChat() {
+    chatHistory = [];
+    chatMessages.innerHTML = `
+        <div class="welcome-message" id="welcomeMessage">
+            <div class="welcome-icon">🤖</div>
+            <h3>Welcome to Adamkhor AI Coding Assistant</h3>
+            <p>Ask me anything about coding, debugging, architecture, or best practices.</p>
+        </div>
+    `;
+}
+
+// ============================================
+// EVENT LISTENERS
+// ============================================
+if (sendBtn) {
+    sendBtn.addEventListener('click', handleSendMessage);
+}
+
+if (chatInput) {
+    chatInput.addEventListener('input', () => {
+        updateSendButton();
+
+        // Auto-resize textarea
+        chatInput.style.height = 'auto';
+        chatInput.style.height = Math.min(chatInput.scrollHeight, 150) + 'px';
+    });
+
+    chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSendMessage();
+        }
+    });
+}
+
+if (newChatBtn) {
+    newChatBtn.addEventListener('click', handleNewChat);
+}
+
+if (clearChatBtn) {
+    clearChatBtn.addEventListener('click', handleClearChat);
+}
+
+// Initial state
+if (sendBtn) {
+    updateSendButton();
+}

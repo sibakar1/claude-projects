@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Redeem your Adamkhor AI Coding Pro activation code">
+    <title>Redeem Your Pro Plan — Adamkhor AI Coding</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .redeem-section {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0a 70%);
+            padding: 8rem 2rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .redeem-container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .redeem-card {
+            background: linear-gradient(145deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .redeem-header {
+            margin-bottom: 2rem;
+        }
+
+        .redeem-header h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .redeem-header p {
+            color: #a0a0a0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .redeem-form {
+            margin: 2.5rem 0;
+        }
+
+        .redeem-input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .redeem-input {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #e0e0e0;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+
+        .redeem-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .redeem-input::placeholder {
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .redeem-button {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .redeem-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .redeem-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .message-box {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .message-success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #4ade80;
+        }
+
+        .message-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+        }
+
+        .message-info {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            color: #667eea;
+        }
+
+        .activation-status {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(102, 126, 234, 0.05);
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .activation-status h2 {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .activation-badge {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            border-radius: 20px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .activation-features {
+            list-style: none;
+            text-align: left;
+            margin: 1.5rem 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .activation-features li {
+            color: #e0e0e0;
+            padding: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .activation-features li:before {
+            content: '✓';
+            color: #4ade80;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .open-chat-button {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            text-decoration: none;
+            display: block;
+        }
+
+        .open-chat-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #667eea;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .redeem-section {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .redeem-card {
+                padding: 2rem;
+            }
+
+            .redeem-header h1 {
+                font-size: 2rem;
+            }
+
+            .activation-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <div class="logo" onclick="window.location.href='index.html'">Adamkhor AI Coding</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="redeem.html">Redeem</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="chat.html" class="nav-cta">Get Started</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="redeem-section">
+        <div class="redeem-container">
+            <div class="redeem-card">
+                <div class="redeem-header">
+                    <h1>Redeem Your Pro Plan</h1>
+                    <p>Have a promotional or activation code? Enter it below to activate Adamkhor AI Coding Pro.</p>
+                </div>
+
+                <div id="redeemFormContainer">
+                    <form class="redeem-form" id="redeemForm">
+                        <div class="redeem-input-group">
+                            <input
+                                type="text"
+                                id="redeemCode"
+                                class="redeem-input"
+                                placeholder="Enter your redeem code"
+                                maxlength="30"
+                                required
+                            >
+                        </div>
+                        <button type="submit" class="redeem-button" id="redeemButton">
+                            Redeem Code
+                        </button>
+                    </form>
+
+                    <div id="messageBox" class="hidden"></div>
+                </div>
+
+                <div id="activationStatus" class="hidden">
+                    <div class="activation-status">
+                        <h2>Adamkhor AI Coding Pro</h2>
+                        <span class="activation-badge">ACTIVE ✓</span>
+                        <p style="color: #a0a0a0; margin-bottom: 1rem;">Plan: Pro | $20/month</p>
+
+                        <ul class="activation-features">
+                            <li>Claude Sonnet</li>
+                            <li>Claude Haiku</li>
+                            <li>DeepSeek</li>
+                            <li>MiniMax</li>
+                            <li>AI Coding Assistant</li>
+                            <li>Code Generation</li>
+                            <li>Debugging</li>
+                            <li>Code Explanation</li>
+                        </ul>
+
+                        <a href="chat.html" class="open-chat-button">Open AI Chat</a>
+                    </div>
+                </div>
+
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // ============================================
+        // DEMO REDEEM CODE SYSTEM
+        // ============================================
+
+        const DEMO_CODE = 'ADAMKHOR-PRO-2026';
+        const STORAGE_KEY = 'adamkhorProActivated';
+
+        const redeemForm = document.getElementById('redeemForm');
+        const redeemCode = document.getElementById('redeemCode');
+        const redeemButton = document.getElementById('redeemButton');
+        const messageBox = document.getElementById('messageBox');
+        const redeemFormContainer = document.getElementById('redeemFormContainer');
+        const activationStatus = document.getElementById('activationStatus');
+
+        function showMessage(message, type) {
+            messageBox.className = `message-box message-${type}`;
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden');
+        }
+
+        function hideMessage() {
+            messageBox.classList.add('hidden');
+        }
+
+        function isProActivated() {
+            const activation = localStorage.getItem(STORAGE_KEY);
+            if (!activation) return false;
+
+            try {
+                const data = JSON.parse(activation);
+                return data.activated === true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function activatePro() {
+            const activationData = {
+                activated: true,
+                plan: 'Pro',
+                price: '$20/month',
+                activationDate: new Date().toISOString(),
+                features: [
+                    'Claude Sonnet',
+                    'Claude Haiku',
+                    'DeepSeek',
+                    'MiniMax',
+                    'AI Coding Assistant',
+                    'Code Generation',
+                    'Debugging',
+                    'Code Explanation'
+                ]
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(activationData));
+        }
+
+        function showActivationStatus() {
+            redeemFormContainer.classList.add('hidden');
+            activationStatus.classList.remove('hidden');
+        }
+
+        function showRedeemForm() {
+            redeemFormContainer.classList.remove('hidden');
+            activationStatus.classList.add('hidden');
+        }
+
+        redeemForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            hideMessage();
+
+            const code = redeemCode.value.trim().toUpperCase();
+
+            if (!code) {
+                showMessage('Please enter a redeem code.', 'error');
+                return;
+            }
+
+            if (isProActivated()) {
+                showMessage('Adamkhor AI Coding Pro is already active ✓', 'info');
+                setTimeout(() => {
+                    showActivationStatus();
+                }, 2000);
+                return;
+            }
+
+            redeemButton.disabled = true;
+            redeemButton.textContent = 'Validating...';
+
+            setTimeout(() => {
+                if (code === DEMO_CODE) {
+                    activatePro();
+                    showMessage('🎉 Adamkhor AI Coding Pro has been activated successfully!', 'success');
+
+                    setTimeout(() => {
+                        showActivationStatus();
+                    }, 2000);
+                } else {
+                    showMessage('Invalid redeem code. Please check the code and try again.', 'error');
+                    redeemButton.disabled = false;
+                    redeemButton.textContent = 'Redeem Code';
+                }
+            }, 1000);
+        });
+
+        if (isProActivated()) {
+            showActivationStatus();
+        } else {
+            showRedeemForm();
+        }
+    </script>
+</body>
+</html>
